@@ -1,4 +1,4 @@
 package ru.gorabchev.lesson2.sqlitedb;
 
-public class DbHabdler {
+public class DbHandler {
 }

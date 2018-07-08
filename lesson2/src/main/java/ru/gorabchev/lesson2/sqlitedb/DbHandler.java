@@ -74,10 +74,7 @@ public class DbHandler {
             query += "" + entry.getKey() + " " + operator + " '" + entry.getValue() + "' " + concatenation + " ";
         }
         query = removeChar(query);
-        System.out.println(query);
-        System.out.println("Начало выполнения запроса: \n" + query);
         try (Statement statement = this.connection.createStatement()) {
-            System.out.println("Время выполнения " + (System.currentTimeMillis() - currentTime));
             ResultSet resultSet = statement.executeQuery(query);
             List<Product> productList = new ArrayList<>();
             while (resultSet.next()) {
@@ -90,7 +87,6 @@ public class DbHandler {
             return productList;
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Время выполнения " + (System.currentTimeMillis() - currentTime));
             return Collections.emptyList();
         }
     }
@@ -105,6 +101,23 @@ public class DbHandler {
             return query.substring(0,query.length()-3);
         }
         return query;
+    }
+
+    public void updateWithWhere(final String columnName, final Map<String, String> where,
+                                final String concatenation, String value){
+        Long currentTime = System.currentTimeMillis();
+        //Формируем запрос
+        try (Statement statement = this.connection.createStatement()) {
+            String query = "UPDATE product SET " + columnName + " = " + value + " WHERE ";
+            for (Map.Entry entry : where.entrySet()) {
+                query += "" + entry.getKey() + " = '" + entry.getValue() + "' " + concatenation + " ";
+            }
+            query = removeChar(query);
+//            System.out.println(query);
+            statement.execute(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     public void insertBigData(List<Product> products) {

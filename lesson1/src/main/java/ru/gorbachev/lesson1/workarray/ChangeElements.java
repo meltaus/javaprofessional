@@ -24,10 +24,10 @@ public class ChangeElements<T extends Serializable> {
         this.element2 = element2;
     }
 
-    public T[] change(T[] arr) {
-        T tmpElement = arr[element1];
-        arr[element1]= arr[element2];
-        arr[element2] = tmpElement;
+    public T[] change() {
+        T tmpElement = this.arr[element1];
+        this.arr[element1]= this.arr[element2];
+        this.arr[element2] = tmpElement;
         return arr;
     }
 }

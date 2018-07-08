@@ -13,6 +13,13 @@ public class Product {
         this.cost = cost;
     }
 
+    public Product(int id, int prodid, String title, float cost) {
+        this.id = id;
+        this.prodid = prodid;
+        this.title = title;
+        this.cost = cost;
+    }
+
     public Product(int prodid) {
         this.prodid = prodid;
     }
@@ -43,5 +50,15 @@ public class Product {
 
     public void setCost(float cost) {
         this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", prodid=" + prodid +
+                ", title='" + title + '\'' +
+                ", cost=" + cost +
+                '}';
     }
 }

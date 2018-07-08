@@ -1,4 +1,6 @@
 package ru.gorbachev.lesson1.fruit;
 
-public class Orange {
+import java.util.List;
+
+public class Orange extends Fruit {
 }

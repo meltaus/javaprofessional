@@ -1,4 +1,12 @@
 package ru.gorbachev.lesson1.fruit;
 
-public class Apple {
+import java.util.List;
+
+public class Apple extends Fruit {
+
+
+
+    public Apple() {
+
+    }
 }

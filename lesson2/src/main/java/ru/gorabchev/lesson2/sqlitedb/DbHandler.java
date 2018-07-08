@@ -1,15 +1,14 @@
 package ru.gorabchev.lesson2.sqlitedb;
 
 import org.sqlite.JDBC;
+import ru.gorabchev.lesson2.essence.Product;
 
 import java.io.File;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.List;
 
 public class DbHandler {
-    
+
     //Имя файла БД
     private static final String FILE_DB_NAME = "product.db";
     // Константа, в которой хранится адрес подключения
@@ -45,5 +44,40 @@ public class DbHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public synchronized void insertProduct(Product product) {
+        // Создадим подготовленное выражение, чтобы избежать SQL-инъекций
+        try(PreparedStatement statement = this.connection.prepareStatement(
+                "INSERT INTO product (`prodid`, `title`, `cost`) " +
+                        "VALUES (?, ?, ?)")) {
+            statement.setObject(1, product.getProdid());
+            statement.setObject(2, product.getTitle());
+            statement.setObject(3, product.getCost());
+            // Выполняем запрос
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertBigData(List<Product> products) {
+        System.out.println("Начало вставки");
+        try (PreparedStatement statement = this.connection.prepareStatement("BEGIN TRANSACTION")) {
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        for (Product product : products) {
+            insertProduct(product);
+        }
+
+        try (PreparedStatement statement = this.connection.prepareStatement("COMMIT")) {
+            statement.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Конец вставки");
     }
 }

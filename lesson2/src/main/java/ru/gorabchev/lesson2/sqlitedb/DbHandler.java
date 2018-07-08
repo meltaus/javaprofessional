@@ -5,7 +5,10 @@ import ru.gorabchev.lesson2.essence.Product;
 
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class DbHandler {
 
@@ -59,6 +62,49 @@ public class DbHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    //Получение строк
+    public List<Product> selectWithWhere(final Map<String, String> where,
+                                        final String concatenation, final String operator) {
+        Long currentTime = System.currentTimeMillis();
+        //Формируем запрос
+        String query = "SELECT * FROM product WHERE ";
+        for (Map.Entry entry : where.entrySet()) {
+            query += "" + entry.getKey() + " " + operator + " '" + entry.getValue() + "' " + concatenation + " ";
+        }
+        query = removeChar(query);
+        System.out.println(query);
+        System.out.println("Начало выполнения запроса: \n" + query);
+        try (Statement statement = this.connection.createStatement()) {
+            System.out.println("Время выполнения " + (System.currentTimeMillis() - currentTime));
+            ResultSet resultSet = statement.executeQuery(query);
+            List<Product> productList = new ArrayList<>();
+            while (resultSet.next()) {
+                productList.add(new Product(resultSet.getInt("id"),
+                        resultSet.getInt("prodid"),
+                        resultSet.getString("title"),
+                        resultSet.getFloat("cost")));
+            }
+
+            return productList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Время выполнения " + (System.currentTimeMillis() - currentTime));
+            return Collections.emptyList();
+        }
+    }
+
+    private String removeChar(final String query) {
+        if (query.contains(" or ")) {
+            return query.substring(0,query.length()-3);
+        } else if (query.contains(" and ")) {
+            return query.substring(0,query.length()-4);
+        }
+        if (query.contains(".db")) {
+            return query.substring(0,query.length()-3);
+        }
+        return query;
     }
 
     public void insertBigData(List<Product> products) {

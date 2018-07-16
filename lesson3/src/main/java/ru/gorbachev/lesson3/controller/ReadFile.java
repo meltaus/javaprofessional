@@ -26,6 +26,7 @@ public class ReadFile {
             for (int i = 0; i < leight; i++) {
                 System.out.print(arr[i] + " ");
             }
+            System.out.println("\n" + new String(arr, "UTF-8"));
         } catch (Exception e) {
             System.out.println("Ошибка чтения файла");
         } finally {

@@ -21,8 +21,13 @@ public class CreateRandomFile {
 
         for (int i = 0; i < countFile; i++) {
             try {
-                filePathList.add("File" + i + ".txt");
-                BufferedWriter writer = new BufferedWriter(new FileWriter("File" + i + ".txt", true));
+                String fileName = "File" + i + ".txt";
+                filePathList.add(fileName);
+                File file = new File(fileName);
+                if (file.exists()) {
+                    file.delete();
+                }
+                BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
                 String lineSeparator = System.getProperty("line.separator");
                 writer.write(lines.get(i) + lineSeparator);
                 writer.close();

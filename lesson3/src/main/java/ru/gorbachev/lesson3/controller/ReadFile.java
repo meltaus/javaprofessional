@@ -39,7 +39,7 @@ public class ReadFile {
 
     //Читаем указанный файл на требуемый размер и пишем в один файл последовательно
     //Предполагает, что файл имеет кодировку utf-8
-    public byte[] concatinationFile(final int leight, final String pathFile) {
+    public void concatinationFile(final int leight, final String pathFile) {
         CreateRandomFile createRandomFile = new CreateRandomFile();
         final List<String> filePathList = createRandomFile.createFile(5, leight);
         List<String> lines = new ArrayList<String>();
@@ -71,6 +71,5 @@ public class ReadFile {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
     }
 }

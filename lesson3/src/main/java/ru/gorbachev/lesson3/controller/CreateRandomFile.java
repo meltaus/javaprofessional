@@ -26,7 +26,6 @@ public class CreateRandomFile {
                 String lineSeparator = System.getProperty("line.separator");
                 writer.write(lines.get(i) + lineSeparator);
                 writer.close();
-                System.out.println(lines.get(i));
             } catch (IOException e) {
                 System.out.println("Ошибка записи в файл");
             }

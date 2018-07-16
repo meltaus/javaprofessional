@@ -1,4 +1,4 @@
-package ru.gorbachev.lesson3.workfile;
+package ru.gorbachev.lesson3.controller;
 
 public class CreateRandomFile {
 }

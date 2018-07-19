@@ -1,8 +1,8 @@
 package ru.gorbachev.lesson4;
 
 import ru.gorbachev.lesson4.controller.PrintChar;
+import ru.gorbachev.lesson4.controller.WriteInFile;
 
-import java.util.Scanner;
 
 public class MainLesson4 {
     public static void main(String[] args) {
@@ -10,13 +10,13 @@ public class MainLesson4 {
         PrintChar printChar = new PrintChar(msg);
         printChar.start();
         try {
-            Thread.sleep(200);
-            printChar.pause();
-            Thread.sleep(300);
+            Thread.sleep(1000);
             printChar.continuePrint();
+
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
+        WriteInFile writeInFile = new WriteInFile();
     }
 }

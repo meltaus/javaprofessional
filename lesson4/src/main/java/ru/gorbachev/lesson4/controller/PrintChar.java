@@ -21,7 +21,9 @@ public class PrintChar extends Thread{
     }
 
     public void continuePrint() {
-        this.msg.notify();
+        synchronized (msg) {
+            this.msg.notifyAll();
+        }
     }
 
     public void pause() {
@@ -40,6 +42,7 @@ public class PrintChar extends Thread{
 
     public void run() {
         synchronized (msg) {
+            pause();
             for (int i = 0; i < 5; i++) {
                 for (int j = 0; j < 3; j++) {
                     System.out.print(printChar.get(j));

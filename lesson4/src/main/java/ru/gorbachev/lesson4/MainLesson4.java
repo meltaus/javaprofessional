@@ -1,7 +1,12 @@
 package ru.gorbachev.lesson4;
 
 import ru.gorbachev.lesson4.controller.PrintChar;
+import ru.gorbachev.lesson4.controller.PrinterWork;
+import ru.gorbachev.lesson4.controller.ScannerWork;
 import ru.gorbachev.lesson4.controller.WriteInFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainLesson4 {
@@ -18,5 +23,21 @@ public class MainLesson4 {
         }
 
         WriteInFile writeInFile = new WriteInFile();
+
+        final Object lockedPrint = new Object();
+        final Object lockedScan = new Object();
+
+        List<PrinterWork> printerWorkList = new ArrayList<>();
+        List<ScannerWork> scannerWorkList = new ArrayList<>();
+
+        for (int i = 0; i < 4; i++) {
+            printerWorkList.add(new PrinterWork(i, lockedPrint));
+            scannerWorkList.add(new ScannerWork(i, lockedScan));
+        }
+
+        for (int i = 0; i < 4; i++) {
+            printerWorkList.get(i).start();
+            scannerWorkList.get(i).start();
+        }
     }
 }

@@ -13,12 +13,6 @@ public class MainLesson3 {
         readFile = new ReadFile();
 
         consoleMenu();
-
-//        readFile.readByteFile(50);
-//        readFile.concatinationFile(100, "result.txt");
-//        Reader reader = new Reader("Обработать");
-//        Thread thread = new Thread(reader);
-//        thread.start();
     }
 
     private static void consoleMenu() {

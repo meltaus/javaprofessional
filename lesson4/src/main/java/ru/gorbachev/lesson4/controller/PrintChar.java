@@ -21,11 +21,17 @@ public class PrintChar extends Thread{
     }
 
     public void continuePrint() {
-        msg.notify();
+        this.msg.notify();
     }
 
-    public void setLocked(boolean locked) {
-        this.locked = locked;
+    public void pause() {
+        synchronized (msg) {
+            try {
+                this.msg.wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public boolean isLocked() {
@@ -34,18 +40,15 @@ public class PrintChar extends Thread{
 
     public void run() {
         synchronized (msg) {
-            for (int i = 0; i < 15; i++) {
-                    if (this.iteration == 3) {
-                        this.iteration = 0;
-                        try {
-                            locked = false;
-                            msg.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    System.out.print(printChar.get(this.iteration));
-                    this.iteration++;
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 3; j++) {
+                    System.out.print(printChar.get(j));
+                }
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
